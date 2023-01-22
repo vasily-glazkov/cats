@@ -36,6 +36,7 @@ closePopupForm.addEventListener("click", () => {
 
 const api = new Api("vasily-glazkov");
 let form = document.forms[0];
+
 form.img_link.addEventListener("change", (e) => {
     form.firstElementChild.style.backgroundImage = `url(${e.target.value})`
 })
@@ -46,14 +47,14 @@ form.addEventListener("submit", e => {
     e.preventDefault();
     let body = {};
     for (let i = 0; i < form.elements.length; i++) {
-        let inp = form.elements[i];
-        if (inp.type === "checkbox") {
-            body[inp.name] = inp.checked;
-        } else if (inp.name && inp.value) {
-            if (inp.type === "number") {
-                body[inp.name] = +inp.value;
+        let input = form.elements[i];
+        if (input.type === "checkbox") {
+            body[input.name] = input.checked;
+        } else if (input.name && input.value) {
+            if (input.type === "number") {
+                body[input.name] = +input.value;
             } else {
-                body[inp.name] = inp.value;
+                body[input.name] = input.value;
             }
         }
     }

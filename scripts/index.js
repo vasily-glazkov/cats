@@ -21,6 +21,7 @@ const updCards = function (data) {
 let addBtn = document.querySelector("#add");
 let popupForm = document.querySelector("#popup-form");
 let closePopupForm = popupForm.querySelector(".popup-close");
+
 addBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -29,6 +30,7 @@ addBtn.addEventListener("click", (e) => {
         popupForm.parentElement.classList.add("active");
     }
 });
+
 closePopupForm.addEventListener("click", () => {
     popupForm.classList.remove("active");
     popupForm.parentElement.classList.remove("active");
@@ -40,9 +42,11 @@ let form = document.forms[0];
 form.img_link.addEventListener("change", (e) => {
     form.firstElementChild.style.backgroundImage = `url(${e.target.value})`
 })
+
 form.img_link.addEventListener("input", (e) => {
     form.firstElementChild.style.backgroundImage = `url(${e.target.value})`
 })
+
 form.addEventListener("submit", e => {
     e.preventDefault();
     let body = {};
@@ -60,7 +64,7 @@ form.addEventListener("submit", e => {
     }
     console.log(body);
     api.addCat(body)
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
             if (data.message === "ok") {
                 form.reset();

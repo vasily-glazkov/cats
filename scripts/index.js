@@ -32,6 +32,10 @@ const updCards = function (data) {
 let addBtn = document.querySelector("#add");
 let popupForm = document.querySelector("#popup-form");
 let closePopupForm = popupForm.querySelector(".popup-close");
+let loginButton = document.querySelector("#login-btn");
+let authFormPopup = document.querySelector("#auth-form-popup");
+let authForm = document.querySelector("#auth-form");
+let closeAuthForm = document.querySelector("#close-auth");
 
 // Add click event listener to add button
 addBtn.addEventListener("click", (e) => {
@@ -50,6 +54,38 @@ closePopupForm.addEventListener("click", () => {
     // Remove active class from popup form and its parent element
     popupForm.classList.remove("active");
     popupForm.parentElement.classList.remove("active");
+});
+
+// Add click event listener to login button
+loginButton.addEventListener("click", function () {
+    if (!authFormPopup.classList.contains("active")) {
+        authFormPopup.classList.add("active");
+        authFormPopup.parentElement.classList.add("active");
+    }
+});
+
+// Add click event listener to close button in the authorization form
+closeAuthForm.addEventListener("click", () => {
+    // Remove active class from popup form and its parent element
+    authFormPopup.classList.remove("active");
+    authFormPopup.parentElement.classList.remove("active");
+});
+
+authForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    // Get the form data
+    let authData = new FormData(authForm);
+    console.log(authData)
+    // Iterate over the form data
+    for (const [key, value] of authData.entries()) {
+        // Set a cookie for each form field
+        document.cookie = `${key}=${value}`;
+    }
+    // Show an alert to confirm the cookies have been set
+    alert("Вы успешно вошли");
+    authForm.reset();
+    authFormPopup.classList.remove("active");
+    authFormPopup.parentElement.classList.remove("active");
 });
 
 // Create new instance of Api class

@@ -15,7 +15,9 @@
 
 <header>
     <a href="" class="logo"><i class="fa-solid fa-paw fa-2x"></i> Милые котики</a>
-    <a class="btn" href="" id="add"><i class="fa-regular fa-plus"></i></a>
+    <a class="btn" href="#" id="add"><i class="fa-regular fa-plus"></i></a>
+    <button class="btn" type="submit" id="login-btn">Войти</button>
+
 </header>
 
 <main>
@@ -58,6 +60,19 @@
                 <input type="text" name="img_link" placeholder="Ссылка на фото">
             </label>
             <button type="submit">Добавить котика</button>
+        </form>
+    </div>
+    <div class="popup" id="auth-form-popup">
+        <div class="popup-close btn" id="close-auth"><i class="fa-solid fa-xmark"></i></div>
+        <h2>Войти</h2>
+        <form action="" id="auth-form">
+            <label>
+                <input type="text" name="username" required placeholder="Имя пользователя">
+            </label>
+            <label>
+                <input type="password" name="password" placeholder="Ваш пароль">
+            </label>
+            <button type="submit" id="login-submit">Войти</button>
         </form>
     </div>
 </div>

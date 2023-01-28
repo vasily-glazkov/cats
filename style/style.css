@@ -48,6 +48,12 @@ main {
     background-color: #aaa;
 }
 
+#login-btn {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.4rem;
+}
+
 @media (min-width: 768px) {
     main {
         grid-template-columns: repeat(3, 1fr);
@@ -71,7 +77,7 @@ main {
 .card {
     padding: 20px;
     text-align: center;
-    background: url(images/cat.jpg) no-repeat center / cover;
+    background: url(/src/img/cat.jpg) no-repeat center / cover;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -130,6 +136,8 @@ main {
 .popup-wrapper.active {
     display: flex;
 }
+
+
 
 .popup {
     width: calc(100% - 20px);

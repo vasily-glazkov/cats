@@ -1,9 +1,12 @@
 let main = document.querySelector("main");
 
+main.innerHTML = "<h3>Пожалуйста введите логин и пароль чтобы отобразить котиков</h3>"
+
 /**
  * This function takes an object data and re-renders the cards with cats.
  * @param {object} data - JavaScript object with cat's data
  */
+
 const updCards = function (data) {
     // Clear the main element's innerHTML
     main.innerHTML = "";
@@ -36,6 +39,16 @@ let loginButton = document.querySelector("#login-btn");
 let authFormPopup = document.querySelector("#auth-form-popup");
 let authForm = document.querySelector("#auth-form");
 let closeAuthForm = document.querySelector("#close-auth");
+let userName = document.querySelector("label input[name='username']");
+
+// When login is successful
+function onSuccessfulLogin(name) {
+    // Hide login button
+    loginButton.style.display = "none";
+    // Display user's name
+    document.querySelector("#user_name").innerHTML = name.value;
+    document.querySelector("#user_name").style.display = "block";
+}
 
 // Add click event listener to add button
 addBtn.addEventListener("click", (e) => {
@@ -71,11 +84,10 @@ closeAuthForm.addEventListener("click", () => {
     authFormPopup.parentElement.classList.remove("active");
 });
 
-authForm.addEventListener("submit", function(event) {
+authForm.addEventListener("submit", function (event) {
     event.preventDefault();
     // Get the form data
     let authData = new FormData(authForm);
-    console.log(authData)
     // Iterate over the form data
     for (const [key, value] of authData.entries()) {
         // Set a cookie for each form field
@@ -83,6 +95,10 @@ authForm.addEventListener("submit", function(event) {
     }
     // Show an alert to confirm the cookies have been set
     alert("Вы успешно вошли");
+    onSuccessfulLogin(userName);
+
+    // Call the getCats function and pass in the api instance
+    getCats(api);
     authForm.reset();
     authFormPopup.classList.remove("active");
     authFormPopup.parentElement.classList.remove("active");
@@ -124,8 +140,7 @@ form.addEventListener("submit", e => {
             }
         }
     }
-    // Log the body object to the console
-    console.log(body);
+
     // Make an API call to add the cat using the body object as the data
     api.addCat(body)
         .then(response => response.json())
@@ -156,11 +171,10 @@ const getCats = function (api) {
                 // Pass the data to the updCards function to update the cards
                 updCards(data.data);
             }
-        })
+        });
 }
 
-// Call the getCats function and pass in the api instance
-getCats(api);
+
 
 
 

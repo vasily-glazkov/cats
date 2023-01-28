@@ -1,6 +1,17 @@
+// Get the add button and popup form elements
+
 let main = document.querySelector("main");
+let addBtn = document.querySelector("#add");
+let popupForm = document.querySelector("#popup-form");
+let closePopupForm = popupForm.querySelector(".popup-close");
+let loginButton = document.querySelector("#login-btn");
+let authFormPopup = document.querySelector("#auth-form-popup");
+let authForm = document.querySelector("#auth-form");
+let closeAuthForm = document.querySelector("#close-auth");
+let userName = document.querySelector("label input[name='username']");
 
 main.innerHTML = "<h3>Пожалуйста введите логин и пароль чтобы отобразить котиков</h3>"
+addBtn.style.display = "none";
 
 /**
  * This function takes an object data and re-renders the cards with cats.
@@ -31,20 +42,11 @@ const updCards = function (data) {
     }
 }
 
-// Get the add button and popup form elements
-let addBtn = document.querySelector("#add");
-let popupForm = document.querySelector("#popup-form");
-let closePopupForm = popupForm.querySelector(".popup-close");
-let loginButton = document.querySelector("#login-btn");
-let authFormPopup = document.querySelector("#auth-form-popup");
-let authForm = document.querySelector("#auth-form");
-let closeAuthForm = document.querySelector("#close-auth");
-let userName = document.querySelector("label input[name='username']");
-
 // When login is successful
 function onSuccessfulLogin(name) {
     // Hide login button
     loginButton.style.display = "none";
+    addBtn.style.display = "flex";
     // Display user's name
     document.querySelector("#user_name").innerHTML = name.value;
     document.querySelector("#user_name").style.display = "block";

@@ -244,3 +244,20 @@ form button:active {
     color: #fff;
     box-shadow: 0 0 2px 0 #0004;
 }
+
+#cat-image {
+    width: 90%;
+}
+
+#update-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#delete-btn {
+    color: #f00;
+}
+
+#updateBtn {
+    color: green;
+}

@@ -1,183 +1,262 @@
-// Get the add button and popup form elements
+const main = document.querySelector("main");
+const addBtn = document.querySelector("#add");
+const popupForm = document.querySelector("#popup-form");
+const closePopupForm = popupForm.querySelector(".popup-close");
+const loginButton = document.querySelector("#login-btn");
+const authFormPopup = document.querySelector("#auth-form-popup");
+const authForm = document.querySelector("#auth-form");
+const closeAuthForm = document.querySelector(".close-auth");
+const userName = document.querySelector("label input[name='username']");
+const catDetailsCard = document.querySelector("#cat-details");
+const catName = document.getElementById("cat-name");
+const catAge = document.getElementById("cat-age");
+const catImage = document.getElementById("cat-image");
+const catDescription = document.querySelector("#cat-description");
+const updateBtn = document.querySelector("#updateBtn");
+const updateFormPopup = document.querySelector("#update-form-popup");
+const updateForm = document.getElementById("update-form");
+const deleteBtn = document.querySelector("#delete-btn");
 
-let main = document.querySelector("main");
-let addBtn = document.querySelector("#add");
-let popupForm = document.querySelector("#popup-form");
-let closePopupForm = popupForm.querySelector(".popup-close");
-let loginButton = document.querySelector("#login-btn");
-let authFormPopup = document.querySelector("#auth-form-popup");
-let authForm = document.querySelector("#auth-form");
-let closeAuthForm = document.querySelector("#close-auth");
-let userName = document.querySelector("label input[name='username']");
+function mainFunc() {
 
-main.innerHTML = "<h3>Пожалуйста введите логин и пароль чтобы отобразить котиков</h3>"
-addBtn.style.display = "none";
+    // Создаем экземпляр api
+    const api = new Api("vasily-glazkov");
 
-/**
- * This function takes an object data and re-renders the cards with cats.
- * @param {object} data - JavaScript object with cat's data
- */
+    main.innerHTML = "<h3>Пожалуйста введите логин и пароль чтобы отобразить котиков</h3>"
 
-const updCards = function (data) {
-    // Clear the main element's innerHTML
-    main.innerHTML = "";
-    // Iterate over data array
-    data.forEach(function (cat) {
-        // Check if cat has an id
-        if (cat.id) {
-            // Create a new card element with cat's data
-            let card = `<div class="${cat.favourite ? "card like" : "card"}" style="background-image: 
-            url(${cat.img_link || "images/cat.jpg"})"><span>${cat.name}</span></div>`;
-            // Append the card to the main element
-            main.innerHTML += card;
+    // Кнопка добавления кота скрыта до авторизации
+    addBtn.style.display = "none";
+
+    // Добавляем слушатель событий на кнопку войти
+    loginButton.addEventListener("click", function () {
+        if (!authFormPopup.classList.contains("active")) {
+
+            // Делаем активной форму авторизации
+            makeActive(authFormPopup);
         }
     });
 
-    // Get all card elements
-    let cards = document.getElementsByClassName("card");
-    for (let i = 0, count = cards.length; i < count; i++) {
-        // Calculate the height of the card based on its width
-        const width = cards[i].offsetWidth;
-        cards[i].style.height = width * 0.6 + "px";
-    }
-}
+    // Добавляем слушатель событий на форму авторизации
+    authForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-// When login is successful
-function onSuccessfulLogin(name) {
-    // Hide login button
-    loginButton.style.display = "none";
-    addBtn.style.display = "flex";
-    // Display user's name
-    document.querySelector("#user_name").innerHTML = name.value;
-    document.querySelector("#user_name").style.display = "block";
-}
+        // Получаем данные из формы авторизации
+        let authData = new FormData(authForm);
 
-// Add click event listener to add button
-addBtn.addEventListener("click", (e) => {
-    // Prevent default behavior
-    e.preventDefault();
+        // Делаем итерацию по данным и декомпозируем
+        for (const [key, value] of authData.entries()) {
 
-    // Add active class to popup form and its parent element
-    if (!popupForm.classList.contains("active")) {
-        popupForm.classList.add("active");
-        popupForm.parentElement.classList.add("active");
-    }
-});
-
-// Add click event listener to close button in the popup form
-closePopupForm.addEventListener("click", () => {
-    // Remove active class from popup form and its parent element
-    popupForm.classList.remove("active");
-    popupForm.parentElement.classList.remove("active");
-});
-
-// Add click event listener to login button
-loginButton.addEventListener("click", function () {
-    if (!authFormPopup.classList.contains("active")) {
-        authFormPopup.classList.add("active");
-        authFormPopup.parentElement.classList.add("active");
-    }
-});
-
-// Add click event listener to close button in the authorization form
-closeAuthForm.addEventListener("click", () => {
-    // Remove active class from popup form and its parent element
-    authFormPopup.classList.remove("active");
-    authFormPopup.parentElement.classList.remove("active");
-});
-
-authForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-    // Get the form data
-    let authData = new FormData(authForm);
-    // Iterate over the form data
-    for (const [key, value] of authData.entries()) {
-        // Set a cookie for each form field
-        document.cookie = `${key}=${value}`;
-    }
-    // Show an alert to confirm the cookies have been set
-    alert("Вы успешно вошли");
-    onSuccessfulLogin(userName);
-
-    // Call the getCats function and pass in the api instance
-    getCats(api);
-    authForm.reset();
-    authFormPopup.classList.remove("active");
-    authFormPopup.parentElement.classList.remove("active");
-});
-
-// Create new instance of Api class
-const api = new Api("vasily-glazkov");
-// Get the first form element
-let form = document.forms[0];
-
-// Add change and input event listeners to image link input
-form.img_link.addEventListener("change", (e) => {
-    form.firstElementChild.style.backgroundImage = `url(${e.target.value})`
-})
-form.img_link.addEventListener("input", (e) => {
-    form.firstElementChild.style.backgroundImage = `url(${e.target.value})`
-})
-
-form.addEventListener("submit", e => {
-    // Prevent default form submission behavior
-    e.preventDefault();
-    // Create an empty object to store the form data
-    let body = {};
-    // Iterate over form elements
-    for (let i = 0; i < form.elements.length; i++) {
-        let input = form.elements[i];
-        // Check if the input is a checkbox
-        if (input.type === "checkbox") {
-            // Add the checkbox value to the body object
-            body[input.name] = input.checked;
-        } else if (input.name && input.value) {
-            // Check if the input is a number
-            if (input.type === "number") {
-                // Convert the input value to a number and add it to the body object
-                body[input.name] = +input.value;
-            } else {
-                // Add the input value to the body object
-                body[input.name] = input.value;
-            }
+            // Устанавливаем куки
+            document.cookie = `${key}=${value}; SameSite=Strict`;
         }
-    }
 
-    // Make an API call to add the cat using the body object as the data
-    api.addCat(body)
-        .then(response => response.json())
-        .then(data => {
-            // Check if the API call was successful
-            if (data.message === "ok") {
-                // Reset the form
-                form.reset();
-                // Close the popup form
-                closePopupForm.click();
-                // Get the cats from the API and update the cards
-                getCats(api);
-            } else {
-                console.log(data);
+        onSuccessfulLogin(userName); // Скрываем кнопку "войти" и отображаем имя
+
+        // Вызываем функцию получения котов
+        getCats(api);
+
+        // Очищаем форму
+        authForm.reset();
+
+        // Скрываем форму
+        hide(authFormPopup);
+    });
+
+    // Добавляем слушатель событий на кнопку закрытия формы авторизации
+    closeAuthForm.addEventListener("click", () => {
+
+        // вызываем функцию убирающую class="active"
+        hide(authFormPopup);
+    });
+
+    // Добавляем event listener на кнопку добавления кота
+    addBtn.addEventListener("click", (e) => {
+        // Prevent default behavior
+        e.preventDefault();
+        hide(updateFormPopup);
+
+        // Делаем форму активной 
+        if (!popupForm.classList.contains("active")) {
+            makeActive(popupForm);
+        }
+    });
+
+    // Добавляем слушатель событий на кнопку закрытия формы
+    closePopupForm.addEventListener("click", () => {
+
+        // вызываем функцию убирающую class="active"
+        hide(popupForm);
+    });
+
+    // Получаем первый элемент формы
+    let form = document.forms[0];
+
+    // Добавляем слушатель на ввод и изменение поля адреса картинки
+    form.img_link.addEventListener("change", (e) => {
+        form.firstElementChild.style.backgroundImage = `url(${e.target.value})`
+    })
+    form.img_link.addEventListener("input", (e) => {
+        form.firstElementChild.style.backgroundImage = `url(${e.target.value})`
+    })
+
+    // Добавляем слушатель на нажатие кнопки "Добавить котика"
+    form.addEventListener("submit", e => {
+        e.preventDefault();
+
+        // читаем данные из полей формы и сохраняем объект в переменную
+        let body = readFormData(form);
+
+        // Очищаем локальное хранилище, чтобы добавился новый кот на страницу
+        // иначе данные будут считываться локально
+        localStorage.clear();
+
+        // С помощью API отправляем запрос на добавление кота на сервер
+        api.addCat(body)
+            .then(response => response.json())
+            .then(data => {
+
+                // Проверяем успешность отправки
+                if (data.message === "ok") {
+
+                    // Очищаем поля формы
+                    form.reset();
+
+                    // Закрываем форму
+                    closePopupForm.click();
+
+                    // API запрос к серверу на получение данных котов
+                    // и отбражаем их карточки на странице
+                    getCats(api);
+                } else {
+                    console.log(data);
+                }
+            })
+    });
+
+    // Детальное отображение кота по клику на его карточке
+    const onCatClick = (event) => {
+        hide(updateFormPopup);
+        
+        // Получаем id карточки кота
+        let id = event.target.id;
+
+        // Создаем переменную с локальными данными кота
+        const catData = JSON.parse(localStorage.getItem(`cat_${id}`));
+
+        // Если данные имеются локально, то рендерим, если нет, то берем через api
+        if (catData) {
+            // Наполняем карточку данными
+            renderCat(catData)
+
+            // Если карточка скрыта, то отображаем ее
+            if (!catDetailsCard.classList.contains("active")) {
+                makeActive(catDetailsCard);
+            }
+        } else {
+            api
+                .getCat(id)
+                .then((response) => response.json())
+                .then((data) => {
+                    // Проверяем наличие данных
+                    if (data.data) {
+
+                        // Добавляем данные в локальное хранилище
+                        localStorage.setItem(`cat_${id}`, JSON.stringify(data.data));
+
+                        // Отрисовываем карточку с котом (данными заполняем)
+                        renderCat(data.data);
+
+                        // Если карточка скрыта, то отображаем ее
+                        if (!catDetailsCard.classList.contains("active")) {
+                            makeActive(catDetailsCard);
+                        }
+                    } else {
+                        console.error("No data found.");
+                    }
+                })
+                .catch((error) => console.error(error));
+        }
+
+        // При нажатии на кнопку "Изменить" в карточке кота
+        updateBtn.addEventListener("click", () => {
+            // Прячем карточку кота
+            hide(catDetailsCard);
+
+            // Активируем форму изменения данных
+            makeActive(updateFormPopup);
+
+            // Предзаполняем поля формы исходными данными для удобства редактирования
+            document.getElementById("update-name").value = JSON.parse(localStorage.getItem(`cat_${id}`)).name;
+            document.getElementById("update-age").value = JSON.parse(localStorage.getItem(`cat_${id}`)).age;
+            document.getElementById("update-description").value = JSON.parse(localStorage.getItem(`cat_${id}`)).description;
+            document.getElementById("update-img-link").value = JSON.parse(localStorage.getItem(`cat_${id}`)).img_link;
+        })
+
+
+        // При нажатии на кнопку "Изменить" в форме редактирования данных
+        updateForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            // Берем обновленные данные из формы
+            const updatedData = {
+                name: updateForm.elements.name.value,
+                age: +updateForm.elements.age.value,
+                description: updateForm.elements.description.value,
+                img_link: updateForm.elements.img_link.value,
+            }
+
+            // Обновляем данные кота используя api.updCat(id, body)
+            api.updCat(id, updatedData)
+                .then(response => response.json())
+                .then(data => {
+                    // Проверяем успешность отправки
+                    if (data.message === "ok") {
+
+                        // Закрываем форму
+                        hide(updateFormPopup);
+
+                        // Чистим локальное хранилище для обновления данных
+                        localStorage.clear();
+
+                        // API запрос к серверу на получение данных котов
+                        // и отбражаем их карточки на странице
+                        getCats(api);
+                    } else {
+                        console.log(data);
+                    }
+                })
+        })
+
+        // При нажатии на кнопку "Удалить" в форме редактирования данных
+        deleteBtn.addEventListener("click", () => {
+
+            // Проверяем случайность нажатия
+            if (confirm("Вы точно хотите удалить котика?")) {
+                api.delCat(id)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message === "ok") {
+                            // Прячем форму
+                            hide(updateFormPopup);
+
+                            // Выводим алерт
+                            alert("Кот удален");
+
+                            // Чистим локальное хранилище для обновления данных
+                            localStorage.clear();
+
+                            // API запрос к серверу на получение данных котов
+                            // и отбражаем их карточки на странице
+                            getCats(api);
+                        } else {
+                            console.log(data);
+                        }
+                    })
             }
         })
-});
-
-
-const getCats = function (api) {
-    // Make an API call to get the cats
-    api.getCats()
-        // Convert the response to JSON
-        .then(res => res.json())
-        .then(data => {
-            // Check if the API call was successful
-            if (data.message === "ok") {
-                // Pass the data to the updCards function to update the cards
-                updCards(data.data);
-            }
-        });
+    }
+    // Отслеживаем нажатие на карточку с котом
+    main.addEventListener('click', onCatClick);
 }
 
-
-
-
-
-
+mainFunc();

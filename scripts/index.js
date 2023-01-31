@@ -5,7 +5,8 @@ const closePopupForm = popupForm.querySelector(".popup-close");
 const loginButton = document.querySelector("#login-btn");
 const authFormPopup = document.querySelector("#auth-form-popup");
 const authForm = document.querySelector("#auth-form");
-const closeAuthForm = document.querySelector(".close-auth");
+const closeUpdateForm = document.querySelector("#close-update-form");
+const closeAuthForm = document.querySelector("#close-auth");
 const userName = document.querySelector("label input[name='username']");
 const catDetailsCard = document.querySelector("#cat-details");
 const catName = document.getElementById("cat-name");
@@ -64,7 +65,6 @@ function mainFunc() {
 
     // Добавляем слушатель событий на кнопку закрытия формы авторизации
     closeAuthForm.addEventListener("click", () => {
-
         // вызываем функцию убирающую class="active"
         hide(authFormPopup);
     });
@@ -83,7 +83,6 @@ function mainFunc() {
 
     // Добавляем слушатель событий на кнопку закрытия формы
     closePopupForm.addEventListener("click", () => {
-
         // вызываем функцию убирающую class="active"
         hide(popupForm);
     });
@@ -135,8 +134,7 @@ function mainFunc() {
 
     // Детальное отображение кота по клику на его карточке
     const onCatClick = (event) => {
-        hide(updateFormPopup);
-        
+
         // Получаем id карточки кота
         let id = event.target.id;
 
@@ -184,6 +182,9 @@ function mainFunc() {
 
             // Активируем форму изменения данных
             makeActive(updateFormPopup);
+            closeUpdateForm.addEventListener("click", () => {
+                hide(updateFormPopup);
+            })
 
             // Предзаполняем поля формы исходными данными для удобства редактирования
             document.getElementById("update-name").value = JSON.parse(localStorage.getItem(`cat_${id}`)).name;

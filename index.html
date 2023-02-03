@@ -14,127 +14,131 @@
 
 <body>
 
-    <!-- навигация -->
-    <header>
-        <a href="" class="logo"><i class="fa-solid fa-paw fa-2x"></i> Милые котики</a>
-        <a class="btn" href="#" id="add"><i class="fa-regular fa-plus"></i></a>
-        <p id="user_name"></p>
-        <button class="btn" type="submit" id="login-btn">Войти</button>
+<!-- навигация -->
+<header>
+    <a href="" class="logo"><i class="fa-solid fa-paw fa-2x"></i> Милые котики</a>
+    <a class="btn" href="#" id="add"><i class="fa-regular fa-plus"></i></a>
+    <p id="user_name"></p>
+    <button class="btn" type="submit" id="login-btn">Войти</button>
 
-    </header>
+</header>
 
-    <!-- Блок отрисовки карточек с котами -->
-    <main>
+<!-- Блок отрисовки карточек с котами -->
+<section id="main">
+    <h3>Пожалуйста введите логин и пароль чтобы отобразить котиков</h3>
 
-    </main>
+    <!--        Контейнер с карточками-->
+    <div id="cards-container"></div>
 
-    <!-- Подвал -->
-    <footer>
-        <span>©2022 Wesley</span>
-        <nav>
-            <a href="https://github.com/vasily-glazkov" target="_blank"><i class="fa-brands fa-github"></i></a>
-            <a href="#"><i class="fa-brands fa-vk"></i></a>
-            <a href="https://t.me/webdev_doc" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-        </nav>
-    </footer>
+</section>
 
-    <!-- Скрытая часть -->
-    <div class="popup-wrapper">
+<!-- Подвал -->
+<footer>
+    <span>©2022 Wesley</span>
+    <nav>
+        <a href="https://github.com/vasily-glazkov" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="#"><i class="fa-brands fa-vk"></i></a>
+        <a href="https://t.me/webdev_doc" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+    </nav>
+</footer>
 
-        <!-- Форма добавления кота на сайт -->
-        <div class="popup" id="popup-form">
-            <div class="popup-close btn"><i class="fa-solid fa-xmark"></i></div>
-            <h2>Добавить питомца</h2>
+<!-- Скрытая часть -->
+<div class="popup-wrapper">
 
-            <form action="">
-                <div class="form-img"></div>
-                <label>
-                    <input type="number" name="id" min="1" required placeholder="id">
-                </label>
-                <label>
-                    <input type="number" name="age" placeholder="Возраст">
-                </label>
-                <label>
-                    <input type="text" name="name" required placeholder="Имя">
-                </label>
-                <label>
-                    <input type="number" name="rate" placeholder="Рейтинг (0-10)" min="0" max="10">
-                </label>
-                <label>
-                    <textarea name="description" placeholder="Описание"></textarea>
-                </label>
-                <label>Любимчик
-                    <input type="checkbox" name="favourite" placeholder="">
-                </label>
-                <label>
-                    <input type="text" name="img_link" placeholder="Ссылка на фото">
-                </label>
-                <button type="submit">Добавить котика</button>
-            </form>
+    <!-- Форма добавления кота на сайт -->
+    <div class="popup" id="popup-form">
+        <div class="popup-close btn"><i class="fa-solid fa-xmark"></i></div>
+        <h2>Добавить питомца</h2>
 
-        </div>
-
-        <!-- Форма авторизации -->
-        <div class="popup" id="auth-form-popup">
-            <div class="popup-close btn" id="close-auth"><i class="fa-solid fa-xmark"></i></div>
-            <h2>Войти</h2>
-
-            <form action="" id="auth-form">
-                <label>
-                    <input type="text" name="username" required placeholder="Имя пользователя">
-                </label>
-                <label>
-                    <input type="password" name="password" placeholder="Ваш пароль" required>
-                </label>
-                <button type="submit" id="login-submit">Войти</button>
-            </form>
-
-        </div>
-
-        <!-- Карточка отображения данных кота -->
-        <div class="popup" id="cat-details">
-
-            <h2 id="cat-name">Имя: </h2>
-            <img id="cat-image" alt="cat image" src="">
-            <p id="cat-age">Возраст: </p>
-            <p id="cat-description">Описание: </p>
-            <button id="updateBtn">Изменить</button>
-            <button id="delete-btn">Удалить</button>
-            <button onclick="hide(catDetailsCard)">Закрыть</button>
-
-        </div>
-
-        <!-- Форма изменения данных кота -->
-        <div class="popup" id="update-form-popup">
-            <div onclick="hide(catDetailsCard)" class="popup-close btn" id="close-update-form">
-                <i class="fa-solid fa-xmark">
-                </i>
-            </div>
-
-            <form id="update-form">
-                <label for="update-name">Имя:
-                    <input type="text" id="update-name" name="name" placeholder="Возраст">
-                </label>
-
-                <label for="update-age">Возраст:
-                    <input type="text" id="update-age" name="age" placeholder="Возраст">
-                </label>
-
-                <label for="update-description">Описание:
-                    <textarea id="update-description" name="description"></textarea>
-                </label>
-                <label for="update-img-link">Ссылка на фото:
-                    <input type="text" id="update-img-link" name="img_link">
-                </label>
-
-                <button onclick="hide(catDetailsCard)" type="submit">Изменить</button>
-            </form>
-
-        </div>
+        <form action="">
+            <div class="form-img"></div>
+            <label>
+                <input type="number" name="id" min="1" required placeholder="id">
+            </label>
+            <label>
+                <input type="number" name="age" placeholder="Возраст">
+            </label>
+            <label>
+                <input type="text" name="name" required placeholder="Имя">
+            </label>
+            <label>
+                <input type="number" name="rate" placeholder="Рейтинг (0-10)" min="0" max="10">
+            </label>
+            <label>
+                <textarea name="description" placeholder="Описание"></textarea>
+            </label>
+            <label>Любимчик
+                <input type="checkbox" name="favourite" placeholder="">
+            </label>
+            <label>
+                <input type="text" name="img_link" placeholder="Ссылка на фото">
+            </label>
+            <button type="submit">Добавить котика</button>
+        </form>
 
     </div>
 
-    <script src="./scripts/index.js"></script>
+    <!-- Форма авторизации -->
+    <div class="popup" id="auth-form-popup">
+        <div class="popup-close btn" id="close-auth"><i class="fa-solid fa-xmark"></i></div>
+        <h2>Войти</h2>
+
+        <form action="" id="auth-form">
+            <label>
+                <input type="text" name="username" required placeholder="Имя пользователя">
+            </label>
+            <label>
+                <input type="password" name="password" placeholder="Ваш пароль" required>
+            </label>
+            <button type="submit" id="login-submit">Войти</button>
+        </form>
+
+    </div>
+
+    <!-- Карточка отображения данных кота -->
+    <div class="popup" id="cat-details">
+
+        <h2 id="cat-name">Имя: </h2>
+        <img id="cat-image" alt="cat image" src="">
+        <p id="cat-age">Возраст: </p>
+        <p id="cat-description">Описание: </p>
+        <button id="updateBtn">Изменить</button>
+        <button id="delete-btn">Удалить</button>
+        <button onclick="hide(catDetailsCard)">Закрыть</button>
+
+    </div>
+
+    <!-- Форма изменения данных кота -->
+    <div class="popup" id="update-form-popup">
+        <div onclick="hide(catDetailsCard)" class="popup-close btn" id="close-update-form">
+            <i class="fa-solid fa-xmark">
+            </i>
+        </div>
+
+        <form id="update-form">
+            <label for="update-name">Имя:
+                <input type="text" id="update-name" name="name" placeholder="Возраст">
+            </label>
+
+            <label for="update-age">Возраст:
+                <input type="text" id="update-age" name="age" placeholder="Возраст">
+            </label>
+
+            <label for="update-description">Описание:
+                <textarea id="update-description" name="description"></textarea>
+            </label>
+            <label for="update-img-link">Ссылка на фото:
+                <input type="text" id="update-img-link" name="img_link">
+            </label>
+
+            <button onclick="hide(catDetailsCard)" type="submit">Изменить</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script src="./scripts/index.js"></script>
 </body>
 
 </html>

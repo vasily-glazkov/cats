@@ -1,4 +1,5 @@
-const main = document.querySelector("main");
+const loginMessage = document.querySelector("#main h3");
+const cardsContainer = document.querySelector("#cards-container");
 const addBtn = document.querySelector("#add");
 const popupForm = document.querySelector("#popup-form");
 const closePopupForm = popupForm.querySelector(".popup-close");
@@ -22,8 +23,6 @@ function mainFunc() {
 
     // Создаем экземпляр api
     const api = new Api("vasily-glazkov");
-
-    main.innerHTML = "<h3>Пожалуйста введите логин и пароль чтобы отобразить котиков</h3>"
 
     // Кнопка добавления кота скрыта до авторизации
     addBtn.style.display = "none";
@@ -52,6 +51,12 @@ function mainFunc() {
         }
 
         onSuccessfulLogin(userName); // Скрываем кнопку "войти" и отображаем имя
+
+        // Скрываем сообщение об авторизации
+        loginMessage.style.display = "none";
+
+        // Делаем видимым контейнер с карточками
+        cardsContainer.style.display = "grid";
 
         // Вызываем функцию получения котов
         getCats(api);
@@ -257,7 +262,7 @@ function mainFunc() {
         })
     }
     // Отслеживаем нажатие на карточку с котом
-    main.addEventListener('click', onCatClick);
+    cardsContainer.addEventListener('click', onCatClick);
 }
 
 mainFunc();

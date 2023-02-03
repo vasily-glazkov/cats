@@ -22,9 +22,16 @@ footer {
     box-shadow: 0 0 2px 0 #0002;
 }
 
-main {
+#main {
     padding: 20px;
-    display: grid;
+    display: block;
+    min-height: calc(100vh - 180px);
+    text-align: center;
+}
+
+#cards-container {
+    display: none;
+    padding: 20px;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     min-height: calc(100vh - 180px);
@@ -55,19 +62,19 @@ main {
 }
 
 @media (min-width: 768px) {
-    main {
+    #cards-container {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 1240px) {
-    main {
+    #cards-container {
         grid-template-columns: repeat(4, 1fr);
         gap: 30px;
         min-height: calc(100vh - 240px);
     }
 
-    main,
+    #cards-container,
     header,
     footer {
         padding: 30px calc(50% - 600px);

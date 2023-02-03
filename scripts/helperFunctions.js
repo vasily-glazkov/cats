@@ -4,8 +4,8 @@ const updCards = function (data) {
     // Получаем все элементы с классом "card"
     const cards = document.getElementsByClassName("card");
 
-    // Чистим main innerHTML
-    main.innerHTML = "";
+    // Чистим cardsContainer innerHTML
+    cardsContainer.innerHTML = "";
 
     // Проходим по массиву с данными
     data.forEach(function (cat) {
@@ -16,8 +16,8 @@ const updCards = function (data) {
             let card = `<div id="${cat.id}" class="${cat.favourite ? "card like" : "card"}" style="background-image: 
             url(${cat.img_link || "images/cat.jpg"})"><span>${cat.name}</span></div>`;
 
-            // Добавляем card к элементу main
-            main.innerHTML += card;
+            // Добавляем card к элементу cardsContainer
+            cardsContainer.innerHTML += card;
         }
     });
 
